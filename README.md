@@ -12,11 +12,11 @@ styles, JSON configuration import/export, and agent integration guidance.
 - Original, Editorial Minimal, Precision Dark, Playful Expressive
 - Host app owns `MaterialTheme`, icons, callbacks, screens, navigation and persistence
 
-## Installation using JitPack (AFTER the release is published)
+## Installation using JitPack
 
 This example assumes the project is pushed as actual source files to the
 **public** repository `anbhfund/UIStudio-Compose` and the `v0.9.0` tag
-successfully builds on JitPack. It is **not live yet** simply because this ZIP exists.
+successfully builds on JitPack. Check the JitPack badge/page for the tag before relying on it.
 
 In the consuming project's `settings.gradle.kts`:
 
@@ -84,7 +84,7 @@ consumer build. Do not announce this as published until those both pass.
 
 ## License
 
-**No license is granted in this release candidate.** The repository owner must
-select and add an explicit license before offering it for general third-party reuse.
-Publishing public source alone does not make it open source. See
-[Release checklist](docs/RELEASE.md).
+Copyright 2026 anbhfund
+
+Licensed under the **Apache License, Version 2.0**. See the [LICENSE](LICENSE) file.
+Optional paid Pro design packs, if released later, are separate products with their own terms.
