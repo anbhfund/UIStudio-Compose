@@ -1,0 +1,41 @@
+name: UI Studio standalone library + external consumer
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android 35 SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Release source and wiring checks
+        run: python3 scripts/release_sanity.py
+      - name: Library unit tests, release AAR, compile on-device tests, local Maven publication
+        run: gradle testDebugUnitTest assembleRelease assembleDebugAndroidTest publishReleasePublicationToMavenLocal --stacktrace
+      - name: Independent Notes Android APK (consumes Maven artifact)
+        run: gradle -p examples/notes-consumer :app:assembleDebug --stacktrace
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: UIStudio-library-release-and-reports
+          path: |
+            build/outputs/aar/*.aar
+            build/reports/tests/
+            examples/notes-consumer/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
